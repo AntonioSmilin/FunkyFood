@@ -6,12 +6,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.tonykuz.funkyfood.R
 import com.tonykuz.funkyfood.databinding.ActivityMainBinding
-import com.tonykuz.funkyfood.domain.Film
+import com.tonykuz.funkyfood.domain.Recipe
 import com.tonykuz.funkyfood.view.fragments.DetailsFragment
 import com.tonykuz.funkyfood.view.fragments.FavoritesFragment
 import com.tonykuz.funkyfood.view.fragments.HomeFragment
 import com.tonykuz.funkyfood.view.fragments.SelectionsFragment
-import com.tonykuz.funkyfood.view.fragments.WatchLaterFragment
+import com.tonykuz.funkyfood.view.fragments.CookLaterFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -34,11 +34,11 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-    fun launchDetailsFragment(film: Film) {
+    fun launchDetailsFragment(recipe: Recipe) {
         //Создаем "посылку"
         val bundle = Bundle()
-        //Кладем наш фильм в "посылку"
-        bundle.putParcelable("film", film)
+        //Кладем наш рецепт в "посылку"
+        bundle.putParcelable("recipe", recipe)
         //Кладем фрагмент с деталями в перменную
         val fragment = DetailsFragment()
         //Прикрепляем нашу "посылку" к фрагменту
@@ -63,28 +63,28 @@ class MainActivity : AppCompatActivity() {
                     //В первом параметре, если фрагмент не найден и метод вернул null, то с помощью
                     //элвиса мы вызываем создание нового фрагмента
                     changeFragment( fragment?: HomeFragment(), tag)
-                    Toast.makeText(this, "Главная", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.home_title_text), Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.favorites -> {
                     val tag = "favorites"
                     val fragment = checkFragmentExistence(tag)
                     changeFragment( fragment?: FavoritesFragment(), tag)
-                    Toast.makeText(this, "Избранное", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.favorites_title), Toast.LENGTH_SHORT).show()
                     true
                 }
-                R.id.watch_later -> {
-                    val tag = "watch_later"
+                R.id.cook_later -> {
+                    val tag = "cook_later"
                     val fragment = checkFragmentExistence(tag)
-                    changeFragment( fragment?: WatchLaterFragment(), tag)
-                    Toast.makeText(this, "Буду смотреть", Toast.LENGTH_SHORT).show()
+                    changeFragment( fragment?: CookLaterFragment(), tag)
+                    Toast.makeText(this, getString(R.string.cook_later_title), Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.selections -> {
                     val tag = "selections"
                     val fragment = checkFragmentExistence(tag)
                     changeFragment( fragment?: SelectionsFragment(), tag)
-                    Toast.makeText(this, "Подборки", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this, getString(R.string.selections_title), Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> false

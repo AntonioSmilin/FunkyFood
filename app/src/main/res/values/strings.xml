@@ -1,9 +1,8 @@
 <resources>
     <string name="app_name">FunkyFood</string>
-    <string name="menu_settings_title">Меню</string>
-    <string name="menu_home_title_text">Главная</string>
-    <string name="menu_favorites_title">Избранное</string>
-    <string name="menu_watch_later_title">Смотреть позже</string>
-    <string name="menu_selections_title">Подборки</string>
+    <string name="home_title_text">Главная</string>
+    <string name="favorites_title">Избранное</string>
+    <string name="cook_later_title">На потом</string>
+    <string name="selections_title">Подборки</string>
     <string name="double_back_toast">Нажмите дважды для выхода</string>
 </resources>

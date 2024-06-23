@@ -3,29 +3,29 @@ package com.tonykuz.funkyfood.view.rv_viewholders
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.tonykuz.funkyfood.databinding.FilmItemBinding
-import com.tonykuz.funkyfood.domain.Film
+import com.tonykuz.funkyfood.databinding.RecipeItemBinding
+import com.tonykuz.funkyfood.domain.Recipe
 
-class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+class RecipeViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-    val filmBinding = FilmItemBinding.bind(itemView)
+    val recipeBinding = RecipeItemBinding.bind(itemView)
 
-    //В этом методе кладем данные из Film в наши View
-    fun bind(film: Film) {
+    //В этом методе кладем данные из Recipe в наши View
+    fun bind(recipe: Recipe) {
 
 
         //Устанавливаем заголовок
-        filmBinding.title.text = film.title
+        recipeBinding.title.text = recipe.title
         //Устанавливаем постер
         //Указываем контейнер, в котором будет "жить" наша картинка
         Glide.with(itemView)
             //Загружаем сам ресурс
-            .load(film.poster)
+            .load(recipe.image)
             //Центруем изображение
             .centerCrop()
             //Указываем ImageView, куда будем загружать изображение
-            .into(filmBinding.poster)
+            .into(recipeBinding.image)
             //Устанавливаем инструкции
-            filmBinding.description.text = film.instructions
+            recipeBinding.instructions.text = recipe.instructions
     }
 }
