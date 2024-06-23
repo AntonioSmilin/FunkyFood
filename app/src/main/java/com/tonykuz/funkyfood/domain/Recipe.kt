@@ -4,9 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Film(
+data class Recipe(
     val title: String,
-    val poster: Int,
+    val image: Int,
     val instructions: String,
     var isInFavorites: Boolean = false
 ) : Parcelable

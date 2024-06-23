@@ -6,16 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.tonykuz.funkyfood.view.rv_adapters.FilmListRecyclerAdapter
+import com.tonykuz.funkyfood.view.rv_adapters.RecipeListRecyclerAdapter
 import com.tonykuz.funkyfood.view.MainActivity
 import com.tonykuz.funkyfood.view.rv_adapters.TopSpacingItemDecoration
 import com.tonykuz.funkyfood.databinding.FragmentFavoritesBinding
-import com.tonykuz.funkyfood.domain.Film
+import com.tonykuz.funkyfood.domain.Recipe
 import com.tonykuz.funkyfood.utils.AnimationHelper
 
 class FavoritesFragment : Fragment() {
 
-    private lateinit var filmsAdapter: FilmListRecyclerAdapter
+    private lateinit var recipesAdapter: RecipeListRecyclerAdapter
     private lateinit var binding: FragmentFavoritesBinding
 
     override fun onCreateView(
@@ -30,19 +30,19 @@ class FavoritesFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         //Получаем список при транзакции фрагмента
-        val favoritesList: List<Film> = emptyList()
+        val favoritesList: List<Recipe> = emptyList()
 
         AnimationHelper.performFragmentCircularRevealAnimation(binding.favoritesFragmentRoot, requireActivity(),2)
 
         binding.favoritesRecycler.apply {
-            filmsAdapter =
-                FilmListRecyclerAdapter(object : FilmListRecyclerAdapter.OnItemClickListener {
-                    override fun click(film: Film) {
-                        (requireActivity() as MainActivity).launchDetailsFragment(film)
+            recipesAdapter =
+                RecipeListRecyclerAdapter(object : RecipeListRecyclerAdapter.OnItemClickListener {
+                    override fun click(recipe: Recipe) {
+                        (requireActivity() as MainActivity).launchDetailsFragment(recipe)
                     }
                 })
             //Присваиваем адаптер
-            adapter = filmsAdapter
+            adapter = recipesAdapter
             //Присвои layoutmanager
             layoutManager = LinearLayoutManager(requireContext())
             //Применяем декоратор для отступов
@@ -50,7 +50,7 @@ class FavoritesFragment : Fragment() {
             addItemDecoration(decorator)
         }
         //Кладем нашу БД в RV
-        filmsAdapter.addItems(favoritesList)
+        recipesAdapter.addItems(favoritesList)
 
     }
 }
