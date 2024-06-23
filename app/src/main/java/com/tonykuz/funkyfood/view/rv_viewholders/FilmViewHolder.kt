@@ -1,9 +1,10 @@
-package com.tonykuz.funkyfood
+package com.tonykuz.funkyfood.view.rv_viewholders
 
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.tonykuz.funkyfood.databinding.FilmItemBinding
+import com.tonykuz.funkyfood.domain.Film
 
 class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
@@ -24,7 +25,7 @@ class FilmViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
             .centerCrop()
             //Указываем ImageView, куда будем загружать изображение
             .into(filmBinding.poster)
-        //Устанавливаем описание
-        filmBinding.description.text = film.description
+            //Устанавливаем инструкции
+            filmBinding.description.text = film.instructions
     }
 }

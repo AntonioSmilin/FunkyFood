@@ -1,14 +1,9 @@
 <resources>
     <string name="app_name">FunkyFood</string>
-    <string name="btn_menu1">Кнопка 1</string>
-    <string name="btn_menu2">Кнопка 2</string>
-    <string name="btn_menu3">Кнопка 3</string>
-    <string name="btn_menu4">Кнопка 4</string>
-    <string name="btn_menu5">Кнопка 5</string>
     <string name="menu_settings_title">Меню</string>
+    <string name="menu_home_title_text">Главная</string>
     <string name="menu_favorites_title">Избранное</string>
     <string name="menu_watch_later_title">Смотреть позже</string>
     <string name="menu_selections_title">Подборки</string>
-    <string name="page_title">Меню123</string>
     <string name="double_back_toast">Нажмите дважды для выхода</string>
 </resources>

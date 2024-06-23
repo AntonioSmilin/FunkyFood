@@ -1,8 +1,11 @@
-package com.tonykuz.funkyfood
+package com.tonykuz.funkyfood.view.rv_adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.tonykuz.funkyfood.view.rv_viewholders.FilmViewHolder
+import com.tonykuz.funkyfood.R
+import com.tonykuz.funkyfood.domain.Film
 
 class FilmListRecyclerAdapter(private val clickListener: OnItemClickListener) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {

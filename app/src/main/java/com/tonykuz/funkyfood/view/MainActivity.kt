@@ -1,10 +1,17 @@
-package com.tonykuz.funkyfood
+package com.tonykuz.funkyfood.view
 
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import com.tonykuz.funkyfood.R
 import com.tonykuz.funkyfood.databinding.ActivityMainBinding
+import com.tonykuz.funkyfood.domain.Film
+import com.tonykuz.funkyfood.view.fragments.DetailsFragment
+import com.tonykuz.funkyfood.view.fragments.FavoritesFragment
+import com.tonykuz.funkyfood.view.fragments.HomeFragment
+import com.tonykuz.funkyfood.view.fragments.SelectionsFragment
+import com.tonykuz.funkyfood.view.fragments.WatchLaterFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,25 +57,49 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigation.setOnItemSelectedListener {
             when (it.itemId) {
 
+                R.id.home -> {
+                    val tag = "home"
+                    val fragment = checkFragmentExistence(tag)
+                    //В первом параметре, если фрагмент не найден и метод вернул null, то с помощью
+                    //элвиса мы вызываем создание нового фрагмента
+                    changeFragment( fragment?: HomeFragment(), tag)
+                    Toast.makeText(this, "Главная", Toast.LENGTH_SHORT).show()
+                    true
+                }
                 R.id.favorites -> {
-                    supportFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.fragment_placeholder, FavoritesFragment())
-                        .addToBackStack(null)
-                        .commit()
+                    val tag = "favorites"
+                    val fragment = checkFragmentExistence(tag)
+                    changeFragment( fragment?: FavoritesFragment(), tag)
+                    Toast.makeText(this, "Избранное", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.watch_later -> {
-                    Toast.makeText(this, "Посмотреть позже", Toast.LENGTH_SHORT).show()
+                    val tag = "watch_later"
+                    val fragment = checkFragmentExistence(tag)
+                    changeFragment( fragment?: WatchLaterFragment(), tag)
+                    Toast.makeText(this, "Буду смотреть", Toast.LENGTH_SHORT).show()
                     true
                 }
                 R.id.selections -> {
+                    val tag = "selections"
+                    val fragment = checkFragmentExistence(tag)
+                    changeFragment( fragment?: SelectionsFragment(), tag)
                     Toast.makeText(this, "Подборки", Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> false
             }
         }
+    }
+    //Ищем фрагмент по тэгу, если он есть то возвращаем его, если нет - то null
+    private fun checkFragmentExistence(tag: String): Fragment? = supportFragmentManager.findFragmentByTag(tag)
+
+    private fun changeFragment(fragment: Fragment, tag: String) {
+        supportFragmentManager
+            .beginTransaction()
+            .replace(R.id.fragment_placeholder, fragment, tag)
+            .addToBackStack(null)
+            .commit()
     }
 
     override fun onBackPressed() {

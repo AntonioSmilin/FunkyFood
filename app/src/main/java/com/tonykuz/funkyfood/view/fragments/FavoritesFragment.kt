@@ -1,4 +1,4 @@
-package com.tonykuz.funkyfood
+package com.tonykuz.funkyfood.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,7 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.tonykuz.funkyfood.view.rv_adapters.FilmListRecyclerAdapter
+import com.tonykuz.funkyfood.view.MainActivity
+import com.tonykuz.funkyfood.view.rv_adapters.TopSpacingItemDecoration
 import com.tonykuz.funkyfood.databinding.FragmentFavoritesBinding
+import com.tonykuz.funkyfood.domain.Film
+import com.tonykuz.funkyfood.utils.AnimationHelper
 
 class FavoritesFragment : Fragment() {
 
@@ -26,6 +31,8 @@ class FavoritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         //Получаем список при транзакции фрагмента
         val favoritesList: List<Film> = emptyList()
+
+        AnimationHelper.performFragmentCircularRevealAnimation(binding.favoritesFragmentRoot, requireActivity(),2)
 
         binding.favoritesRecycler.apply {
             filmsAdapter =

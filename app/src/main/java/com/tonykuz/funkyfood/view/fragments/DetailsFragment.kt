@@ -1,4 +1,4 @@
-package com.tonykuz.funkyfood
+package com.tonykuz.funkyfood.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.tonykuz.funkyfood.R
 import com.tonykuz.funkyfood.databinding.FragmentDetailsBinding
+import com.tonykuz.funkyfood.domain.Film
 
 class DetailsFragment : Fragment() {
     //private var detailBinding: FragmentDetailsBinding? = null
@@ -47,7 +49,7 @@ class DetailsFragment : Fragment() {
             //Кладем данные о нашем фильме
             intent.putExtra(
                 Intent.EXTRA_TEXT,
-                "Check out this film: ${film.title} \n\n ${film.description}"
+                "Check out this film: ${film.title} \n\n ${film.instructions}"
             )
             //Указываем MIME тип, чтобы система знала, какое приложения предложить
             intent.type = "text/plain"
@@ -65,8 +67,8 @@ class DetailsFragment : Fragment() {
         binding.detailsToolbar.title = film.title
         //Устанавливаем картинку
         binding.detailsPoster.setImageResource(film.poster)
-        //Устанавливаем описание
-        binding.detailsDescription.text = film.description
+        //Устанавливаем инструкции
+        binding.detailsDescription.text = film.instructions
 
         binding.detailsFabFavorites.setImageResource(
             if (film.isInFavorites) R.drawable.baseline_favorite_24
