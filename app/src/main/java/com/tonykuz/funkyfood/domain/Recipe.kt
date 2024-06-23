@@ -1,12 +1,12 @@
-package com.tonykuz.funkyfood
+package com.tonykuz.funkyfood.domain
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class Film(
+data class Recipe(
     val title: String,
-    val poster: Int,
-    val description: String,
+    val image: Int,
+    val instructions: String,
     var isInFavorites: Boolean = false
 ) : Parcelable
