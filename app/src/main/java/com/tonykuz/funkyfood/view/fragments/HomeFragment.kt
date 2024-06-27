@@ -103,7 +103,7 @@ class HomeFragment : Fragment() {
                 //Фильтруем список на поиск подходящих сочетаний
                 val result = recipesDataBases.filter {
                     //Чтобы все работало правильно, нужно и запрос, и название рецепта приводить к нижнему регистру
-                    it.title.lowercase(Locale.getDefault())
+                    it.title!!.lowercase(Locale.getDefault())
                         .contains(newText.lowercase(Locale.getDefault()))
                 }
 

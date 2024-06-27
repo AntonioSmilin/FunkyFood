@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.tonykuz.funkyfood.R
+import com.tonykuz.funkyfood.data.ApiConstants
 import com.tonykuz.funkyfood.databinding.FragmentDetailsBinding
 import com.tonykuz.funkyfood.domain.Recipe
 
@@ -65,7 +67,11 @@ class DetailsFragment : Fragment() {
         //Устанавливаем заголовок
         binding.detailsToolbar.title = recipe.title
         //Устанавливаем картинку
-        binding.detailsImage.setImageResource(recipe.image)
+        Glide.with(this)
+            .load(ApiConstants.IMAGES_URL + recipe.id + "-636x393" + recipe.image)
+            .centerCrop()
+            .into(binding.detailsImage)
+
         //Устанавливаем инструкции
         binding.detailsInstructions.text = recipe.instructions
 
