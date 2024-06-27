@@ -1,4 +1,4 @@
-package com.tonykuz.funkyfood
+package com.tonykuz.funkyfood.view.fragments
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,12 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.tonykuz.funkyfood.R
+import com.tonykuz.funkyfood.data.ApiConstants
 import com.tonykuz.funkyfood.databinding.FragmentDetailsBinding
+import com.tonykuz.funkyfood.domain.Recipe
 
 class DetailsFragment : Fragment() {
-    //private var detailBinding: FragmentDetailsBinding? = null
     private lateinit var binding: FragmentDetailsBinding
-    private lateinit var film: Film
+    private lateinit var recipe: Recipe
 
 
 
@@ -27,15 +30,15 @@ class DetailsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        setFilmsDetails()
+        setRecipesDetails()
 
         binding.detailsFabFavorites.setOnClickListener {
-            if (!film.isInFavorites) {
+            if (!recipe.isInFavorites) {
                 binding.detailsFabFavorites.setImageResource(R.drawable.baseline_favorite_24)
-                film.isInFavorites = true
+                recipe.isInFavorites = true
             } else {
                 binding.detailsFabFavorites.setImageResource(R.drawable.baseline_favorite_border_24)
-                film.isInFavorites = false
+                recipe.isInFavorites = false
             }
         }
 
@@ -44,10 +47,10 @@ class DetailsFragment : Fragment() {
             val intent = Intent()
             //Указываем action с которым он запускается
             intent.action = Intent.ACTION_SEND
-            //Кладем данные о нашем фильме
+            //Кладем данные о нашем рецепте
             intent.putExtra(
                 Intent.EXTRA_TEXT,
-                "Check out this film: ${film.title} \n\n ${film.description}"
+                "Check out this recipe: ${recipe.title} \n\n ${recipe.instructions}"
             )
             //Указываем MIME тип, чтобы система знала, какое приложения предложить
             intent.type = "text/plain"
@@ -57,19 +60,23 @@ class DetailsFragment : Fragment() {
     }
 
 
-    private fun setFilmsDetails() {
-        //Получаем наш фильм из переданного бандла
-        film = arguments?.get("film") as Film
+    private fun setRecipesDetails() {
+        //Получаем наш рецепт из переданного бандла
+        recipe = arguments?.get("recipe") as Recipe
 
         //Устанавливаем заголовок
-        binding.detailsToolbar.title = film.title
+        binding.detailsToolbar.title = recipe.title
         //Устанавливаем картинку
-        binding.detailsPoster.setImageResource(film.poster)
-        //Устанавливаем описание
-        binding.detailsDescription.text = film.description
+        Glide.with(this)
+            .load(ApiConstants.IMAGES_URL + recipe.id + "-636x393" + recipe.image)
+            .centerCrop()
+            .into(binding.detailsImage)
+
+        //Устанавливаем инструкции
+        binding.detailsInstructions.text = recipe.instructions
 
         binding.detailsFabFavorites.setImageResource(
-            if (film.isInFavorites) R.drawable.baseline_favorite_24
+            if (recipe.isInFavorites) R.drawable.baseline_favorite_24
             else R.drawable.baseline_favorite_border_24
         )
     }
