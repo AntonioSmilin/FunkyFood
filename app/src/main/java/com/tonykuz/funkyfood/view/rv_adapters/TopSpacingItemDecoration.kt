@@ -1,4 +1,4 @@
-package com.tonykuz.funkyfood
+package com.tonykuz.funkyfood.view.rv_adapters
 
 import android.content.res.Resources
 import android.graphics.Rect
