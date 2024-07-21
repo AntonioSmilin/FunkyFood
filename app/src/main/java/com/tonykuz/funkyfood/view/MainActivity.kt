@@ -13,12 +13,10 @@ import com.tonykuz.funkyfood.view.fragments.HomeFragment
 import com.tonykuz.funkyfood.view.fragments.SelectionsFragment
 import com.tonykuz.funkyfood.view.fragments.CookLaterFragment
 
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private var backPressed = 0L
-
+    private var backPressedTime = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,25 +24,24 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
         initNavigation()
 
-        //Запускаем фрагмент при старте
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.fragment_placeholder, HomeFragment())
-            .addToBackStack(null)
-            .commit()
+        // Запускаем начальный фрагмент при старте
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .replace(R.id.fragment_placeholder, HomeFragment(), "home")
+                .commit()
+        }
     }
 
     fun launchDetailsFragment(recipe: Recipe) {
-        //Создаем "посылку"
-        val bundle = Bundle()
-        //Кладем наш рецепт в "посылку"
-        bundle.putParcelable("recipe", recipe)
-        //Кладем фрагмент с деталями в перменную
-        val fragment = DetailsFragment()
-        //Прикрепляем нашу "посылку" к фрагменту
-        fragment.arguments = bundle
+        val bundle = Bundle().apply {
+            putParcelable("recipe", recipe)
+        }
 
-        //Запускаем фрагмент
+        val fragment = DetailsFragment().apply {
+            arguments = bundle
+        }
+
         supportFragmentManager
             .beginTransaction()
             .replace(R.id.fragment_placeholder, fragment)
@@ -52,47 +49,50 @@ class MainActivity : AppCompatActivity() {
             .commit()
     }
 
-
     private fun initNavigation() {
         binding.bottomNavigation.setOnItemSelectedListener {
-            when (it.itemId) {
+            val fragment: Fragment?
+            val tag: String
+            val toastMessage: String
 
+            when (it.itemId) {
                 R.id.home -> {
-                    val tag = "home"
-                    val fragment = checkFragmentExistence(tag)
-                    //В первом параметре, если фрагмент не найден и метод вернул null, то с помощью
-                    //элвиса мы вызываем создание нового фрагмента
-                    changeFragment( fragment?: HomeFragment(), tag)
-                    Toast.makeText(this, getString(R.string.home_title_text), Toast.LENGTH_SHORT).show()
-                    true
+                    tag = "home"
+                    fragment = checkFragmentExistence(tag) ?: HomeFragment()
+                    toastMessage = getString(R.string.home_title_text)
                 }
                 R.id.favorites -> {
-                    val tag = "favorites"
-                    val fragment = checkFragmentExistence(tag)
-                    changeFragment( fragment?: FavoritesFragment(), tag)
-                    Toast.makeText(this, getString(R.string.favorites_title), Toast.LENGTH_SHORT).show()
-                    true
+                    tag = "favorites"
+                    fragment = checkFragmentExistence(tag) ?: FavoritesFragment()
+                    toastMessage = getString(R.string.favorites_title)
                 }
                 R.id.cook_later -> {
-                    val tag = "cook_later"
-                    val fragment = checkFragmentExistence(tag)
-                    changeFragment( fragment?: CookLaterFragment(), tag)
-                    Toast.makeText(this, getString(R.string.cook_later_title), Toast.LENGTH_SHORT).show()
-                    true
+                    tag = "cook_later"
+                    fragment = checkFragmentExistence(tag) ?: CookLaterFragment()
+                    toastMessage = getString(R.string.cook_later_title)
                 }
                 R.id.selections -> {
-                    val tag = "selections"
-                    val fragment = checkFragmentExistence(tag)
-                    changeFragment( fragment?: SelectionsFragment(), tag)
-                    Toast.makeText(this, getString(R.string.selections_title), Toast.LENGTH_SHORT).show()
-                    true
+                    tag = "selections"
+                    fragment = checkFragmentExistence(tag) ?: SelectionsFragment()
+                    toastMessage = getString(R.string.selections_title)
                 }
-                else -> false
+                else -> return@setOnItemSelectedListener false
             }
+
+            changeFragment(fragment, tag)
+            showToast(toastMessage)
+            true
         }
     }
-    //Ищем фрагмент по тэгу, если он есть то возвращаем его, если нет - то null
-    private fun checkFragmentExistence(tag: String): Fragment? = supportFragmentManager.findFragmentByTag(tag)
+
+    private fun showToast(message: String) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    // Ищем фрагмент по тэгу, если он есть, то возвращаем его, если нет - то null
+    private fun checkFragmentExistence(tag: String): Fragment? {
+        return supportFragmentManager.findFragmentByTag(tag)
+    }
 
     private fun changeFragment(fragment: Fragment, tag: String) {
         supportFragmentManager
@@ -104,21 +104,19 @@ class MainActivity : AppCompatActivity() {
 
     override fun onBackPressed() {
         if (supportFragmentManager.backStackEntryCount <= 1) {
-            if (backPressed + TIME_INTERVAL > System.currentTimeMillis()) {
+            if (backPressedTime + TIME_INTERVAL > System.currentTimeMillis()) {
                 super.onBackPressed()
                 finish()
             } else {
-                Toast.makeText(this, getString(R.string.double_back_toast), Toast.LENGTH_SHORT)
-                    .show()
+                showToast(getString(R.string.double_back_toast))
             }
-
-            backPressed = System.currentTimeMillis()
+            backPressedTime = System.currentTimeMillis()
         } else {
             super.onBackPressed()
         }
     }
 
     companion object {
-        const val TIME_INTERVAL = 2000
+        private const val TIME_INTERVAL = 2000L
     }
 }

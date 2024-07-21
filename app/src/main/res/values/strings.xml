@@ -5,4 +5,6 @@
     <string name="cook_later_title">На потом</string>
     <string name="selections_title">Подборки</string>
     <string name="double_back_toast">Нажмите дважды для выхода</string>
+    <string name="api_load_error">Ошибка получения данных</string>
+    <string name="image_url">%1$s%2$d-312x231%3$s</string>
 </resources>
