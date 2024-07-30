@@ -1,10 +1,14 @@
 <resources>
     <string name="app_name">FunkyFood</string>
-    <string name="home_title_text">Главная</string>
-    <string name="favorites_title">Избранное</string>
-    <string name="cook_later_title">На потом</string>
-    <string name="selections_title">Подборки</string>
-    <string name="double_back_toast">Нажмите дважды для выхода</string>
-    <string name="api_load_error">Ошибка получения данных</string>
-    <string name="image_url">%1$s%2$d-312x231%3$s</string>
+    <string name="favorite">Избранное</string>
+    <string name="home">Главная</string>
+    <string name="category">Категории</string>
+    <string name="fast_food">Фастфуд</string>
+    <string name="no_favorites">Нет избранного :(</string>
+    <string name="what_would_you_like_to_eat">Чего бы такого съесть</string>
+    <string name="over_popular_items">Еще популярное</string>
+    <string name="type_meal_name">Введите название..</string>
+    <string name="beef">Говядина</string>
+
+
 </resources>

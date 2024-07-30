@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId "com.tonykuz.funkyfood"
-        minSdk 26
+        minSdk 21
         targetSdk 34
         versionCode 1
         versionName "1.0"
@@ -75,4 +75,24 @@ dependencies {
     androidTestImplementation libs.androidx.ui.test.junit4
     debugImplementation libs.androidx.ui.tooling
     debugImplementation libs.androidx.ui.test.manifest
+
+    implementation libs.androidx.legacy.support.v4
+
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+
+    testImplementation libs.junit
+    androidTestImplementation libs.androidx.junit.v113
+    implementation libs.androidx.navigation.fragment.ktx
+    implementation libs.androidx.navigation.ui.ktx
+
+    //viewmodel
+    implementation libs.androidx.lifecycle.viewmodel.ktx
+    implementation libs.androidx.lifecycle.extensions
+
+    //room
+    implementation libs.room.runtime
+    annotationProcessor libs.androidx.room.compiler
+
+    //gif
+    implementation libs.android.gif.drawable
 }
